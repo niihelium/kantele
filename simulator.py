@@ -1,6 +1,6 @@
 import numpy as np
 from circuit import Circuit, Operator
-from gate import x
+from gate import x, h
 
 
 class Simulator:
@@ -22,5 +22,7 @@ class Simulator:
         gate = []
         if (operator.type == Operator.Type.x):
             gate = x
+        elif (operator.type == Operator.Type.h):
+            gate = h
 
         return np.dot(value, gate)
