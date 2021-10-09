@@ -31,10 +31,16 @@ class Circuit:
             Operator(Operator.Type.h, target_qubit)
         )
 
+    def y(self, target_qubit: int):
+        self.operators.append(
+            Operator(Operator.Type.y, target_qubit)
+        )
+
 
 class Operator:
     class Type(Enum):
         x = 'x',
+        y = 'y',
         h = 'h'
 
     def __init__(self, type: Type, target_qubit: int):

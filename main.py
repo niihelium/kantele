@@ -6,7 +6,7 @@ from simulator import Simulator
 def main():
     circuit = Circuit()
     circuit.set_qubit(qubit.one)
-    circuit.h(0)
+    circuit.y(0)
     simulator = Simulator(Simulator.NUMPY)
     result = simulator.calculate(circuit)
     print(result)
