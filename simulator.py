@@ -17,14 +17,22 @@ class Simulator:
 
     def calculate(self, circuit: Circuit) -> np.array:
         self.circuit = circuit
-        value = circuit.qubit
-        operator = self.next_operator()
-        gate = []
-        if (operator.type == Operator.Type.x):
-            gate = x
-        elif (operator.type == Operator.Type.y):
-            gate = y
-        elif (operator.type == Operator.Type.h):
-            gate = h
 
-        return np.dot(value, gate)
+        if (len(circuit.operators) == 0):
+            return circuit.qubit
+
+        value = circuit.qubit
+        gate = []
+
+        while (self.position < len(circuit.operators)):
+            operator = self.next_operator()
+            if (operator.type == Operator.Type.x):
+                gate = x
+            elif (operator.type == Operator.Type.y):
+                gate = y
+            elif (operator.type == Operator.Type.h):
+                gate = h
+            value = np.dot(value, gate)
+        
+
+        return value
