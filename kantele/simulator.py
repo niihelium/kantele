@@ -1,6 +1,8 @@
 import numpy as np
-from circuit import Circuit, Operator
-from gate import x, h, y
+
+from .circuit import Circuit
+from .gate import x, h, y
+from .operator import Operator
 
 
 class Simulator:

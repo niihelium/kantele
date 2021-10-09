@@ -1,12 +1,9 @@
-from typing import Type
-from enum import Enum
-
 from numpy import ndarray
-import qubit
 
+from kantele import qubit
+from .operator import Operator
 
 class Circuit:
-
 
     def __init__(self, qubit_count=1):
         self.qubit: ndarray = qubit.zero
@@ -37,12 +34,3 @@ class Circuit:
         )
 
 
-class Operator:
-    class Type(Enum):
-        x = 'x',
-        y = 'y',
-        h = 'h'
-
-    def __init__(self, type: Type, target_qubit: int):
-        self.type = type
-        self.target_qubit = target_qubit
