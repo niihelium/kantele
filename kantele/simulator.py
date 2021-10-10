@@ -22,6 +22,7 @@ class Simulator:
             result = values[0]
             for item in values[1:]:
                 result = np.outer(item, result)
+            
             result = np.reshape(result, -1)
 
             return result
@@ -46,7 +47,7 @@ class Simulator:
 
             target_qubit = operator.target_qubit
 
-            values[target_qubit] = np.dot(values[target_qubit], gate)
+            values[target_qubit] = np.dot(gate, values[target_qubit])
         
 
         return self.return_statevector(values)
