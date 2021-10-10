@@ -17,13 +17,22 @@ class Simulator:
         self.position += 1
         return operator
 
+    
+    def qubits_product(self, values) -> np.array:
+            result = values[0]
+            for item in values[1:]:
+                result = np.outer(item, result)
+            result = np.reshape(result, -1)
+
+            return result
+
     def calculate(self, circuit: Circuit) -> np.array:
         self.circuit = circuit
 
         if (len(circuit.operators) == 0):
-            return circuit.qubit
+            return self.return_statevector(circuit.qubits)
 
-        value = circuit.qubit
+        values = circuit.qubits
         gate = []
 
         while (self.position < len(circuit.operators)):
@@ -34,7 +43,18 @@ class Simulator:
                 gate = y
             elif (operator.type == Operator.Type.h):
                 gate = h
-            value = np.dot(value, gate)
+
+            target_qubit = operator.target_qubit
+
+            values[target_qubit] = np.dot(values[target_qubit], gate)
         
 
-        return value
+        return self.return_statevector(values)
+
+    def return_statevector(self, qubits):
+        if (len(qubits) == 1):
+            return qubits[0]
+        else:
+            return self.qubits_product(qubits)
+
+        

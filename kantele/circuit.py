@@ -5,18 +5,18 @@ from .operator import Operator
 
 class Circuit:
 
-    def __init__(self, qubit_count=1):
-        self.qubit: ndarray = qubit.zero
+    def __init__(self, qubit_count: int = 1):
+        self.qubits = [qubit.zero] * qubit_count
         self.operators = []
 
     def qubits(self):
         return self.qubit_count
 
-    def set_qubit(self, qubit):
-        self.qubit = qubit
+    def set_qubit(self, qubit_index, qubit):
+        self.qubits[qubit_index] = qubit
 
-    def set_qubit(self, qubit: ndarray):
-        self.qubit = qubit
+    def set_qubit(self, qubit_index, qubit: ndarray):
+        self.qubits[qubit_index] = qubit
 
     def x(self, target_qubit: int):
         self.operators.append(
