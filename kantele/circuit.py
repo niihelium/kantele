@@ -1,7 +1,8 @@
 from numpy import ndarray
 
-from kantele import qubit
+from kantele import gate, qubit
 from .operator import Operator
+
 
 class Circuit:
 
@@ -20,17 +21,23 @@ class Circuit:
 
     def x(self, target_qubit: int):
         self.operators.append(
-            Operator(Operator.Type.x, target_qubit)
+            Operator(Operator.Type.x, target_qubit, gate=gate.x)
+        )
+
+    def cx(self, control_qubit: int, target_qubit: int):
+        self.operators.append(
+            Operator(Operator.Type.cx,
+                     control_qubit=control_qubit,
+                     target_qubit=target_qubit,
+                     gate=gate.cx)
         )
 
     def h(self, target_qubit: int):
         self.operators.append(
-            Operator(Operator.Type.h, target_qubit)
+            Operator(Operator.Type.h, target_qubit, gate=gate.h)
         )
 
     def y(self, target_qubit: int):
         self.operators.append(
-            Operator(Operator.Type.y, target_qubit)
+            Operator(Operator.Type.y, target_qubit, gate=gate.y)
         )
-
-

@@ -21,7 +21,7 @@ class Simulator:
     def qubits_product(self, values) -> np.array:
             result = values[0]
             for item in values[1:]:
-                result = np.outer(item, result)
+                result = np.kron(item, result)
             
             result = np.reshape(result, -1)
 
@@ -38,12 +38,7 @@ class Simulator:
 
         while (self.position < len(circuit.operators)):
             operator = self.next_operator()
-            if (operator.type == Operator.Type.x):
-                gate = x
-            elif (operator.type == Operator.Type.y):
-                gate = y
-            elif (operator.type == Operator.Type.h):
-                gate = h
+            gate = operator.gate
 
             target_qubit = operator.target_qubit
 
