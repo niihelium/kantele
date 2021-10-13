@@ -1,9 +1,10 @@
 import numpy as np
 
-import pytest
-
 from kantele.validator import Validator
 from kantele.gate import x, y, h
+
+import pytest
+
 
 testdata = [
     (x, True),

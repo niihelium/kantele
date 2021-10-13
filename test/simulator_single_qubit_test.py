@@ -1,58 +1,48 @@
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
+from kantele import Simulator, Circuit
+
 import pytest
+from test_util import prepare_circuit_1
 
-from kantele import Simulator, Circuit, qubit
 
-def prepare_circuit_1() -> Circuit:
-    circuit = Circuit()
-    circuit.set_qubit(0, qubit.one)
-    return circuit
-
-testdata = [
+testdata_x = [
     (Circuit(), [0, 1]),
-    (prepare_circuit_1, [1, 0]),
+    (prepare_circuit_1(), [1, 0]),
 ]
 
-#@pytest.mark.parametrize("circuit, expected", testdata)
-def test_single_qubit_x():
-    circuit = Circuit()
+
+@pytest.mark.parametrize("circuit, expected", testdata_x)
+def test_single_qubit_x(circuit, expected):
     circuit.x(0)
     simulator = Simulator(Simulator.NUMPY)
     result = simulator.calculate(circuit)
-    assert_array_equal(result,  [0, 1])
+    assert_array_equal(result, expected)
 
-def test_single_qubit_x_1():
-    circuit = prepare_circuit_1()
-    circuit.x(0)
-    simulator = Simulator(Simulator.NUMPY)
-    result = simulator.calculate(circuit)
-    assert_array_equal(result,  [1, 0])
 
-def test_single_qubit_y_0():
-    circuit = Circuit()
+testdata_y = [
+    (Circuit(), [0, 1j]),
+    (prepare_circuit_1(), [-1j, 0]),
+]
+
+
+@pytest.mark.parametrize("circuit, expected", testdata_y)
+def test_single_qubit_y(circuit, expected):
     circuit.y(0)
     simulator = Simulator(Simulator.NUMPY)
     result = simulator.calculate(circuit)
-    assert_array_equal(result,  [0, 1j])
+    assert_array_equal(result,  expected)
 
-def test_single_qubit_y_1():
-    circuit = prepare_circuit_1()
-    circuit.y(0)
-    simulator = Simulator(Simulator.NUMPY)
-    result = simulator.calculate(circuit)
-    assert_array_equal(result,  [-1j, 0])
 
-def test_single_qubit_h_0():
-    circuit = Circuit()
+testdata_h = [
+    (Circuit(), [0.70710678, 0.70710678]),
+    (prepare_circuit_1(), [0.70710678, -0.70710678]),
+]
+
+
+@pytest.mark.parametrize("circuit, expected", testdata_h)
+def test_single_qubit_h(circuit, expected):
     circuit.h(0)
     simulator = Simulator(Simulator.NUMPY)
     result = simulator.calculate(circuit)
-    assert_array_almost_equal(result,  [0.70710678, 0.70710678])
-
-def test_single_qubit_h_1():
-    circuit = prepare_circuit_1()
-    circuit.h(0)
-    simulator = Simulator(Simulator.NUMPY)
-    result = simulator.calculate(circuit)
-    assert_array_almost_equal(result,  [0.70710678, -0.70710678])
+    assert_array_almost_equal(result, expected)

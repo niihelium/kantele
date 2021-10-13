@@ -12,22 +12,37 @@ class Simulator:
         self.position = 0
         self.circuit: Circuit = Circuit()
 
-    def next_operator(self) -> Operator:
+    def _next_operator(self) -> Operator:
+        """
+        Return next operator from operators list and advance position.
+        """
         operator = self.circuit.operators[self.position]
         self.position += 1
         return operator
 
     
-    def qubits_product(self, values) -> np.array:
-            result = values[0]
-            for item in values[1:]:
-                result = np.kron(item, result)
-            
-            result = np.reshape(result, -1)
+    def _qubits_product(self, values) -> np.array:
+        """
+        Return Kronecker multiplication of variable length qubits list.
 
-            return result
+        Args:
+            values: List of qubits.
+        """
+        result = values[0]
+        for item in values[1:]:
+            result = np.kron(item, result)
+            
+        result = np.reshape(result, -1)
+
+        return result
 
     def calculate(self, circuit: Circuit) -> np.array:
+        """
+        Perform statevector calculation for given circuit
+
+        Args:
+            circuit: Constructed circuit.
+        """
         self.circuit = circuit
 
         if (len(circuit.operators) == 0):
@@ -37,7 +52,7 @@ class Simulator:
         gate = []
 
         while (self.position < len(circuit.operators)):
-            operator = self.next_operator()
+            operator = self._next_operator()
             gate = operator.gate
 
             target_qubit = operator.target_qubit
@@ -45,9 +60,9 @@ class Simulator:
             values[target_qubit] = np.dot(gate, values[target_qubit])
         
 
-        return self.return_statevector(values)
+        return self._return_statevector(values)
 
-    def return_statevector(self, qubits):
+    def _return_statevector(self, qubits):
         if (len(qubits) == 1):
             return qubits[0]
         else:
