@@ -12,3 +12,4 @@ class Operator:
     def __init__(self, type: Type, target_qubit: int, gate: np.array, control_qubit: int = None):
         self.type = type
         self.target_qubit = target_qubit
+        self.gate = gate
