@@ -1,26 +1,16 @@
+from typing import List
 from kantele import Circuit, qubit
 
 
-def prepare_circuit_1() -> Circuit:
-    circuit = Circuit()
-    circuit.set_qubit(0, qubit.one)
+def prepare_circuit(qubits: list) -> Circuit:
+    circuit = Circuit(len(qubits))
+    for position, qubit in enumerate(qubits):
+        circuit.set_qubit(position, qubit)
     return circuit
 
-def prepare_circuit_00() -> Circuit:
-    return Circuit(2)
 
-def prepare_circuit_01() -> Circuit:
-    circuit = Circuit(2)
-    circuit.set_qubit(1, qubit.one)
-    return circuit
-
-def prepare_circuit_10() -> Circuit:
-    circuit = Circuit(2)
-    circuit.set_qubit(0, qubit.one)
-    return circuit
-
-def prepare_circuit_11() -> Circuit:
-    circuit = Circuit(2)
-    circuit.set_qubit(0, qubit.one)
-    circuit.set_qubit(1, qubit.one)
+def prepare_circuit(qubits: List[int]) -> Circuit:
+    circuit = Circuit(len(qubits))
+    for position, qubit in enumerate(qubits):
+        circuit.set_qubit(position, [0, 1] if qubit else [1, 0])
     return circuit

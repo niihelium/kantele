@@ -1,9 +1,9 @@
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from kantele import Simulator, Circuit
+from kantele import Simulator, Circuit, qubit
 
 import pytest
-from test_util import prepare_circuit_1, prepare_circuit_00, prepare_circuit_01, prepare_circuit_10, prepare_circuit_11
+from test_util import prepare_circuit
 
 sv_00 = [1, 0, 0, 0]
 sv_01 = [0, 1, 0, 0]
@@ -11,10 +11,10 @@ sv_10 = [0, 0, 1, 0]
 sv_11 = [0, 0, 0, 1]
 
 testdata_statevector = [
-    (prepare_circuit_00(), sv_00),
-    (prepare_circuit_01(), sv_01),
-    (prepare_circuit_10(), sv_10),
-    (prepare_circuit_11(), sv_11),
+    (prepare_circuit([0, 0]), sv_00),
+    (prepare_circuit([0, 1]), sv_01),
+    (prepare_circuit([1, 0]), sv_10),
+    (prepare_circuit([1, 1]), sv_11),
 ]
 
 
@@ -26,14 +26,14 @@ def test_two_qubit_statevector(circuit, expected):
 
 
 testdata_x = [
-    (prepare_circuit_00(), 0, sv_10),
-    (prepare_circuit_00(), 1, sv_01),
-    (prepare_circuit_01(), 0, sv_11),
-    (prepare_circuit_01(), 1, sv_00),
-    (prepare_circuit_10(), 0, sv_00),
-    (prepare_circuit_10(), 1, sv_11),
-    (prepare_circuit_11(), 0, sv_01),
-    (prepare_circuit_11(), 1, sv_10),
+    (prepare_circuit([0, 0]), 0, sv_10),
+    (prepare_circuit([0, 0]), 1, sv_01),
+    (prepare_circuit([0, 1]), 0, sv_11),
+    (prepare_circuit([0, 1]), 1, sv_00),
+    (prepare_circuit([1, 0]), 0, sv_00),
+    (prepare_circuit([1, 0]), 1, sv_11),
+    (prepare_circuit([1, 1]), 0, sv_01),
+    (prepare_circuit([1, 1]), 1, sv_10),
 ]
 
 

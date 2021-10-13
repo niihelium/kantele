@@ -1,14 +1,14 @@
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from kantele import Simulator, Circuit
+from kantele import Simulator, Circuit, qubit
 
 import pytest
-from test_util import prepare_circuit_1
+from test_util import prepare_circuit
 
 
 testdata_x = [
     (Circuit(), [0, 1]),
-    (prepare_circuit_1(), [1, 0]),
+    (prepare_circuit([1]), [1, 0]),
 ]
 
 
@@ -22,7 +22,7 @@ def test_single_qubit_x(circuit, expected):
 
 testdata_y = [
     (Circuit(), [0, 1j]),
-    (prepare_circuit_1(), [-1j, 0]),
+    (prepare_circuit([1]), [-1j, 0]),
 ]
 
 
@@ -36,7 +36,7 @@ def test_single_qubit_y(circuit, expected):
 
 testdata_h = [
     (Circuit(), [0.70710678, 0.70710678]),
-    (prepare_circuit_1(), [0.70710678, -0.70710678]),
+    (prepare_circuit([1]), [0.70710678, -0.70710678]),
 ]
 
 

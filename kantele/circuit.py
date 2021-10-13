@@ -37,13 +37,13 @@ class Circuit:
             Operator(Operator.Type.x, target_qubit, gate=gate.x)
         )
 
-    def cx(self, control_qubit: int, target_qubit: int):
+    def cx(self, target_qubit: int, control_qubit: int):
         """
         Apply CNOT gate on qubit.
 
         Args:
-            control_qubit: The qubit used as control.
             target_qubit: The qubit to apply the gate to.
+            control_qubit: The qubit used as control.
         """
         self.operators.append(
             Operator(Operator.Type.cx,

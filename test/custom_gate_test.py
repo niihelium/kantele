@@ -5,7 +5,7 @@ from kantele.operator import Operator
 
 import pytest
 from numpy.testing import assert_array_equal
-from test_util import prepare_circuit_1
+from test_util import prepare_circuit
 
 z_gate = np.array([[1, 0],
                    [0, -1]])
@@ -13,7 +13,7 @@ z_gate = np.array([[1, 0],
 
 testdata_x = [
     (Circuit(), [1, 0]),
-    (prepare_circuit_1(), [0, -1]),
+    (prepare_circuit([1]), [0, -1]),
 ]
 
 
