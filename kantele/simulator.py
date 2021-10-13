@@ -46,7 +46,7 @@ class Simulator:
         self.circuit = circuit
 
         if (len(circuit.operators) == 0):
-            return self.return_statevector(circuit.qubits)
+            return self._return_statevector(circuit.qubits)
 
         values = circuit.qubits
         gate = []
@@ -66,6 +66,6 @@ class Simulator:
         if (len(qubits) == 1):
             return qubits[0]
         else:
-            return self.qubits_product(qubits)
+            return self._qubits_product(qubits)
 
         
