@@ -1,3 +1,14 @@
+# Kantele
+
+Simple quantum circut simulator written in Python.
+
+Convention used in this project - big endian. 
+
+a --------- <br>
+b --------- <br>
+
+Resulting statevector is: | a b >
+
 ## Running
 
 To run example project first you need to make sure to install [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html) (or virtualenv manager of your choice).

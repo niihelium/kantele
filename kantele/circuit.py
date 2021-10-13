@@ -8,12 +8,12 @@ class Circuit:
     """
     Create new circut
     """
-    def __init__(self, qubit_count: int = 1):
-        self.qubits = [qubit.zero] * qubit_count
+    def __init__(self, qubits_count: int = 1):
+        self.qubits = [qubit.zero] * qubits_count
         self.operators = []
 
-    def qubits(self):
-        return self.qubit_count
+    def get_qubits(self):
+        return self.qubits
 
     def set_qubit(self, qubit_index, qubit: ndarray):
         """

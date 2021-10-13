@@ -3,6 +3,7 @@ import numpy as np
 from .circuit import Circuit
 from .gate import x, h, y
 from .operator import Operator
+from kantele import circuit
 
 
 class Simulator:
@@ -20,7 +21,6 @@ class Simulator:
         self.position += 1
         return operator
 
-    
     def _qubits_product(self, values) -> np.array:
         """
         Return Kronecker multiplication of variable length qubits list.
@@ -30,9 +30,7 @@ class Simulator:
         """
         result = values[0]
         for item in values[1:]:
-            result = np.kron(item, result)
-            
-        result = np.reshape(result, -1)
+            result = np.kron(result, item)
 
         return result
 
@@ -44,28 +42,27 @@ class Simulator:
             circuit: Constructed circuit.
         """
         self.circuit = circuit
+        self.statevector = self._qubits_product(self.circuit.qubits)
 
         if (len(circuit.operators) == 0):
-            return self._return_statevector(circuit.qubits)
-
-        values = circuit.qubits
-        gate = []
+            return self.statevector
 
         while (self.position < len(circuit.operators)):
             operator = self._next_operator()
-            gate = operator.gate
+            matrix = self._prepare_matrix(operator, len(self.circuit.qubits))
 
-            target_qubit = operator.target_qubit
+            self.statevector = np.matmul(matrix, self.statevector)
 
-            values[target_qubit] = np.dot(gate, values[target_qubit])
-        
+        return self.statevector
 
-        return self._return_statevector(values)
+    def _prepare_matrix(self, operator: Operator, qubits_count: int) -> np.array:
+        before = np.eye(2**operator.target_qubit)
+        gate = operator.gate
+        after = np.eye(2**(qubits_count - operator.target_qubit - int(operator.gate.shape[0]**0.5)) )
+        return np.kron(np.kron(before, gate), after)
 
     def _return_statevector(self, qubits):
         if (len(qubits) == 1):
             return qubits[0]
         else:
             return self._qubits_product(qubits)
-
-        
