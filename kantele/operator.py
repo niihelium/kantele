@@ -13,3 +13,5 @@ class Operator:
         self.type = type
         self.target_qubit = target_qubit
         self.gate = gate
+
+

@@ -41,3 +41,8 @@ class Circuit:
         self.operators.append(
             Operator(Operator.Type.y, target_qubit, gate=gate.y)
         )
+
+    def apply_operator(self, target_qubit: int, operator: Operator):
+        self.operators.append(
+            operator
+        )

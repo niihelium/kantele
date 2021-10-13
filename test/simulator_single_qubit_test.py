@@ -1,5 +1,7 @@
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
+import pytest
+
 from kantele import Simulator, Circuit, qubit
 
 def prepare_circuit_1() -> Circuit:
@@ -7,7 +9,13 @@ def prepare_circuit_1() -> Circuit:
     circuit.set_qubit(0, qubit.one)
     return circuit
 
-def test_single_qubit_x_0():
+testdata = [
+    (Circuit(), [0, 1]),
+    (prepare_circuit_1, [1, 0]),
+]
+
+#@pytest.mark.parametrize("circuit, expected", testdata)
+def test_single_qubit_x():
     circuit = Circuit()
     circuit.x(0)
     simulator = Simulator(Simulator.NUMPY)
