@@ -7,9 +7,7 @@ from kantele import circuit
 
 
 class Simulator:
-    NUMPY = "numpy"
-
-    def __init__(self, backend=NUMPY):
+    def __init__(self):
         self.position = 0
         self.circuit: Circuit = Circuit()
 
@@ -20,6 +18,11 @@ class Simulator:
         operator = self.circuit.operators[self.position]
         self.position += 1
         return operator
+
+
+class NumpySimulator(Simulator):
+    def __init__(self):
+        Simulator.__init__(self)
 
     def _qubits_product(self, values) -> np.array:
         """
@@ -58,7 +61,8 @@ class Simulator:
     def _prepare_matrix(self, operator: Operator, qubits_count: int) -> np.array:
         before = np.eye(2**operator.target_qubit)
         gate = operator.gate
-        after = np.eye(2**(qubits_count - operator.target_qubit - int(operator.gate.shape[0]**0.5)) )
+        after = np.eye(2**(qubits_count - operator.target_qubit -
+                       int(operator.gate.shape[0]**0.5)))
         return np.kron(np.kron(before, gate), after)
 
     def _return_statevector(self, qubits):

@@ -1,9 +1,10 @@
-from numpy.testing import assert_array_equal, assert_array_almost_equal
-
-from kantele import Simulator, Circuit, qubit
+from kantele import provider
+from kantele.provider import request_simulator_backend
 
 import pytest
 from test_util import prepare_circuit
+from numpy.testing import assert_array_equal
+
 
 sv_00 = [1, 0, 0, 0]
 sv_01 = [0, 1, 0, 0]
@@ -20,7 +21,7 @@ testdata_statevector = [
 
 @pytest.mark.parametrize("circuit, expected", testdata_statevector)
 def test_two_qubit_statevector(circuit, expected):
-    simulator = Simulator(Simulator.NUMPY)
+    simulator = request_simulator_backend(provider.NUMPY)
     result = simulator.calculate(circuit)
     assert_array_equal(result, expected)
 
@@ -40,6 +41,6 @@ testdata_x = [
 @pytest.mark.parametrize("circuit, qubit, expected", testdata_x)
 def test_two_qubit_x(circuit, qubit, expected):
     circuit.x(qubit)
-    simulator = Simulator(Simulator.NUMPY)
+    simulator = request_simulator_backend(provider.NUMPY)
     result = simulator.calculate(circuit)
     assert_array_equal(result, expected)

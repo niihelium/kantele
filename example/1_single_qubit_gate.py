@@ -1,8 +1,8 @@
-import numpy as np
-from kantele import Simulator, Circuit, qubit
+from kantele import Circuit, provider
+from kantele.provider import request_simulator_backend
 
 circuit = Circuit()
 circuit.y(0)
-simulator = Simulator(Simulator.NUMPY)
+simulator = request_simulator_backend(provider.NUMPY)
 result = simulator.calculate(circuit)
 print(result)

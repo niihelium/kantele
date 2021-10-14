@@ -1,5 +1,5 @@
 from typing import List
-from kantele import Circuit, qubit
+from kantele import Circuit
 
 
 def prepare_circuit(qubits: List[int]) -> Circuit:
