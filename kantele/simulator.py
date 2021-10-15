@@ -1,5 +1,7 @@
 import numpy as np
 
+from kantele.optimizer import Optimizer
+
 from .circuit import Circuit
 from .gate import x, h, y
 from .operator import Operator
@@ -44,7 +46,8 @@ class NumpySimulator(Simulator):
         Args:
             circuit: Constructed circuit.
         """
-        self.circuit = circuit
+        self.optimizer = Optimizer()
+        self.circuit = self.optimizer.optimize(circuit)
         self.statevector = self._qubits_product(self.circuit.qubits)
 
         if (len(circuit.operators) == 0):
