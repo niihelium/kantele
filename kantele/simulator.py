@@ -5,7 +5,7 @@ from kantele.optimizer import Optimizer
 from .circuit import Circuit
 from .gate import x, h, y
 from .operator import Operator
-from kantele import circuit
+from . import matrix_builder
 
 
 class Simulator:
@@ -55,18 +55,13 @@ class NumpySimulator(Simulator):
 
         while (self.position < len(circuit.operators)):
             operator = self._next_operator()
-            matrix = self._prepare_matrix(operator, len(self.circuit.qubits))
+            matrix = matrix_builder.prepare_matrix(operator, len(self.circuit.qubits))
 
             self.statevector = np.matmul(matrix, self.statevector)
 
         return self.statevector
 
-    def _prepare_matrix(self, operator: Operator, qubits_count: int) -> np.array:
-        before = np.eye(2**operator.target_qubit)
-        gate = operator.gate
-        after = np.eye(2**(qubits_count - operator.target_qubit -
-                       int(operator.gate.shape[0]**0.5)))
-        return np.kron(np.kron(before, gate), after)
+
 
     def _return_statevector(self, qubits):
         if (len(qubits) == 1):
