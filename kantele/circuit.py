@@ -1,13 +1,14 @@
 from numpy import ndarray
 
 from kantele import gate, qubit
-from .operator import Operator
+from .operator import CXgate, Hgate, Operator, Xgate, Ygate
 
 
 class Circuit:
     """
     Create new circut
     """
+
     def __init__(self, qubits_count: int = 1):
         self.qubits = [qubit.zero] * qubits_count
         self.operators = []
@@ -33,11 +34,9 @@ class Circuit:
         Args:
             target_qubit: The qubit to apply the gate to.
         """
-        self.operators.append(
-            Operator(Operator.Type.x, target_qubit, gate=gate.x)
-        )
+        self.operators.append(Xgate(target_qubit))
 
-    def cx(self, target_qubit: int, control_qubit: int):
+    def cx(self, control_qubit: int, target_qubit: int, ):
         """
         Apply CNOT gate on qubit.
 
@@ -45,12 +44,7 @@ class Circuit:
             target_qubit: The qubit to apply the gate to.
             control_qubit: The qubit used as control.
         """
-        self.operators.append(
-            Operator(Operator.Type.cx,
-                     control_qubit=control_qubit,
-                     target_qubit=target_qubit,
-                     gate=gate.cx)
-        )
+        self.operators.append(CXgate(control_qubit, target_qubit))
 
     def h(self, target_qubit: int):
         """
@@ -59,9 +53,7 @@ class Circuit:
         Args:
             target_qubit: The qubit to apply the gate to.
         """
-        self.operators.append(
-            Operator(Operator.Type.h, target_qubit, gate=gate.h)
-        )
+        self.operators.append(Hgate(target_qubit))
 
     def y(self, target_qubit: int):
         """
@@ -70,9 +62,7 @@ class Circuit:
         Args:
             target_qubit: The qubit to apply the gate to.
         """
-        self.operators.append(
-            Operator(Operator.Type.y, target_qubit, gate=gate.y)
-        )
+        self.operators.append(Ygate(target_qubit))
 
     def apply_operator(self, target_qubit: int, operator: Operator):
         """
@@ -83,6 +73,4 @@ class Circuit:
             operator: user-defined object of Operator class.
 
         """
-        self.operators.append(
-            operator
-        )
+        self.operators.append(operator)
