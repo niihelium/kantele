@@ -1,20 +1,20 @@
 import numpy as np
 
 from kantele import gate, matrix_builder
-from kantele.operator import Operator
+from kantele.operator import Operator, Xgate
 
 import pytest
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
 
 testdata = [
-    (Operator(Operator.Type.x, 0, gate=gate.x), 1, np.array([[0, 1],
+    (Xgate(0), 1, np.array([[0, 1],
                                                              [1, 0]])),
-    (Operator(Operator.Type.x, 0, gate=gate.x), 2, np.array([[0, 0, 1, 0],
+    (Xgate(0), 2, np.array([[0, 0, 1, 0],
                                                              [0, 0, 0, 1],
                                                              [1, 0, 0, 0],
                                                              [0, 1, 0, 0], ])),
-    (Operator(Operator.Type.x, 1, gate=gate.x), 2, np.array([[0, 1, 0, 0],
+    (Xgate(1), 2, np.array([[0, 1, 0, 0],
                                                              [1, 0, 0, 0],
                                                              [0, 0, 0, 1],
                                                              [0, 0, 1, 0], ]))
